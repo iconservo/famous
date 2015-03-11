@@ -63,6 +63,7 @@ define(function(require, exports, module) {
         object.on = handler.on.bind(handler);
         object.addListener = object.on;
         object.removeListener = handler.removeListener.bind(handler);
+        object.emit = handler.emit.bind(handler);
     };
 
     /**
