@@ -106,5 +106,11 @@ define(function(require, exports, module) {
         else return this.options.size;
     };
 
+    View.prototype.reEmit = function(target, event, newEvent) {
+        target.on(event, function(arg) {
+            this._eventOutput.emit(newEvent || event, arg);
+        }.bind(this));
+    };
+
     module.exports = View;
 });
