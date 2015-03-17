@@ -7,8 +7,8 @@ define(function(require, exports, module) {
     var RenderNode     = require('famous/core/RenderNode');
     var Transitionable = require('famous/transitions/Transitionable');
     var Easing         = require('famous/transitions/Easing');
-    var Utilities      = require('utils/Utilities');
-    var _              = require('lodash');
+    var MathUtilities  = require('famous/utilities/MathUtilities');
+    var Utility        = require('famous/utilities/Utility');
 
     var TouchSync = require('famous/inputs/TouchSync');
 
@@ -75,12 +75,12 @@ define(function(require, exports, module) {
             return {
                 target: [
                     { target: this.page.render() },
-                    { target: this.shadow.render(), opacity: Utilities.interpolate(this.startOpacity, this.endOpacity, state) }
+                    { target: this.shadow.render(), opacity: MathUtilities.interpolate(this.startOpacity, this.endOpacity, state) }
                 ],
                 transform: Transform.translate(
-                    Utilities.interpolate(this.startTranslate[0], this.endTranslate[0], state),
-                    Utilities.interpolate(this.startTranslate[1], this.endTranslate[1], state),
-                    Utilities.interpolate(this.startTranslate[2], this.endTranslate[2], state)
+                    MathUtilities.interpolate(this.startTranslate[0], this.endTranslate[0], state),
+                    MathUtilities.interpolate(this.startTranslate[1], this.endTranslate[1], state),
+                    MathUtilities.interpolate(this.startTranslate[2], this.endTranslate[2], state)
                 )
             };
         };
@@ -207,7 +207,7 @@ define(function(require, exports, module) {
             else endState = 0;
         var callback = endState ? _endPrevious.bind(this) : null;
 
-        var transition = _.extend({}, this.options.transition);
+        var transition = Utility.clone(this.options.transition);
         transition.duration *= Math.abs(endState - this.state.get());
 
         this.state.set(endState, transition, callback);
