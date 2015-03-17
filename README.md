@@ -1,1 +1,3 @@
-Blossom form of Famo.us library. Contains additional modules for Blossom App
+##Blossom fork of Famo.us
+
+Contains additional modules for Blossom App
