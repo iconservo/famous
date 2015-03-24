@@ -17,7 +17,7 @@ define(function(require, exports, module) {
         }
     };
 
-    Composer.prototype..reEmit = function(view, event, newEvent) {
+    Composer.prototype.reEmit = function(view, event, newEvent) {
         view.on(event, function(arg) {
             this._eventOutput.emit(newEvent || event, arg);
         }.bind(this));
