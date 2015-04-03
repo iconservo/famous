@@ -11,6 +11,7 @@ define(function(require, exports, module) {
     Element.prototype.render = function() {
         var size = this.size;
         if (!size && this.target.getSize) size = this.target.getSize();
+        if (size && (size[0] === 0 && size[1] === 0)) size = null;
 
         return {
             target: this.target.render(),
@@ -22,7 +23,9 @@ define(function(require, exports, module) {
     };
 
     Element.prototype.getSize = function() {
-        return this.target.getSize();
+        var size = this.size;
+        if (!size && this.target.getSize) size = this.target.getSize();
+        return size;
     };
 
     module.exports = Element;
