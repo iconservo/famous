@@ -198,7 +198,7 @@ define(function(require, exports, module) {
                         align: [0.5, 0.5]
                     },
                     {
-                        target: this.current.render(),
+                        target: this.current && this.current.render(),
                         transform: Transform.translate(0, 0, 0),
                         origin: [0.5, 0.5],
                         align: [0.5, 0.5]
