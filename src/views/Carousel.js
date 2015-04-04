@@ -1,3 +1,29 @@
+/*
+    var Engine = require('famous/core/Engine');
+    var Carousel = require('famous/views/Carousel');
+    var Surface = require('famous/core/Surface');
+
+    var mainContext = Engine.createContext();
+    var carousel = new Carousel();
+
+    var items = [];
+    var n = 5;
+    for (var i = 0; i < n; i++) {
+        var surface = new Surface({
+            content: i + '',
+            size: [260, 200],
+            properties: {
+                backgroundColor: 'hsl(' + 360/n * i + ', 100%, 50%)'
+            }
+        });
+
+        items.push(surface);
+    }
+
+    carousel.sequenceFrom(items);
+    mainContext.add(carousel);
+*/
+
 define(function(require, exports, module) {
     var Engine           = require('famous/core/Engine');
     var View             = require('famous/core/View');
@@ -34,7 +60,7 @@ define(function(require, exports, module) {
     Carousel.prototype.constructor = Carousel;
 
     Carousel.DEFAULT_OPTIONS = {
-        loop: true,
+        loop: false,
         positionThreshold: 75,
         velocityThreshold: 0.2,
         transition: {
@@ -68,9 +94,9 @@ define(function(require, exports, module) {
         this.sync.on('end', function(data) {
             var velocity = data.velocity;
             var position = this.position.get();
-            if (position > this.options.positionThreshold || velocity > this.options.velocityThreshold)
+            if (this.prev && (position > this.options.positionThreshold || velocity > this.options.velocityThreshold))
                 _goToPrevPage.call(this);
-            else if (position < -this.options.positionThreshold || velocity < -this.options.velocityThreshold)
+            else if (this.next && (position < -this.options.positionThreshold || velocity < -this.options.velocityThreshold))
                 _goToNextPage.call(this);
             else this.position.set(0, this.options.transition);
         }.bind(this));
@@ -111,10 +137,9 @@ define(function(require, exports, module) {
                 this.current = this.prev;
                 this.subscribe(this.current.get());
                 this.prev = this.current.getPrevious();
+                _updateDots.call(this, this.index - 1);
             }.bind(this));
         }.bind(this));
-
-        _updateDots.call(this, this.index - 1);
     }
 
     function _goToNextPage() {
@@ -126,10 +151,9 @@ define(function(require, exports, module) {
                 this.current = this.next;
                 this.subscribe(this.current.get());
                 this.next = this.current.getNext();
+                _updateDots.call(this, this.index + 1);
             }.bind(this));
         }.bind(this));
-
-        _updateDots.call(this, this.index + 1);
     }
 
     function _updateDots(newIndex) {
@@ -168,7 +192,7 @@ define(function(require, exports, module) {
             {
                 target: [
                     {
-                        target: this.prev.render(),
+                        target: this.prev && this.prev.render(),
                         transform: Transform.translate(-this.offset, 0, 0),
                         origin: [0.5, 0.5],
                         align: [0.5, 0.5]
@@ -180,7 +204,7 @@ define(function(require, exports, module) {
                         align: [0.5, 0.5]
                     },
                     {
-                        target: this.next.render(),
+                        target: this.next && this.next.render(),
                         transform: Transform.translate(this.offset, 0, 0),
                         origin: [0.5, 0.5],
                         align: [0.5, 0.5]
