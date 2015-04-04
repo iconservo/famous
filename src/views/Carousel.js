@@ -137,9 +137,9 @@ define(function(require, exports, module) {
                 this.current = this.prev;
                 this.subscribe(this.current.get());
                 this.prev = this.current.getPrevious();
-                _updateDots.call(this, this.index - 1);
             }.bind(this));
         }.bind(this));
+        _updateDots.call(this, this.index - 1);
     }
 
     function _goToNextPage() {
@@ -151,9 +151,9 @@ define(function(require, exports, module) {
                 this.current = this.next;
                 this.subscribe(this.current.get());
                 this.next = this.current.getNext();
-                _updateDots.call(this, this.index + 1);
             }.bind(this));
         }.bind(this));
+        _updateDots.call(this, this.index + 1);
     }
 
     function _updateDots(newIndex) {
@@ -186,7 +186,7 @@ define(function(require, exports, module) {
     Carousel.prototype.commit = function(context) {
         if (!this.numItems) return;
         this.offset = context.size[0];
-        return [
+        context.target = [
             {
                 target: this.background.render()
             },
@@ -224,6 +224,7 @@ define(function(require, exports, module) {
                 align: [0.5, 1]
             }
         ];
+        return context;
     };
 
     module.exports = Carousel;
