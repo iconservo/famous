@@ -6,6 +6,7 @@ define(function(require, exports, module) {
         this.size = options.size;
         if (options.translate) this.transform = Transform.translate.apply(null, options.translate);
         this.origin = options.origin;
+        this.opacity = options.opacity || 1;
     }
 
     Element.prototype.render = function() {
@@ -18,7 +19,8 @@ define(function(require, exports, module) {
             size: size,
             transform: this.transform,
             origin: this.origin,
-            align: this.origin
+            align: this.origin,
+            opacity: this.opacity
         };
     };
 
@@ -26,6 +28,10 @@ define(function(require, exports, module) {
         var size = this.size;
         if (!size && this.target.getSize) size = this.target.getSize();
         return size;
+    };
+
+    Element.prototype.setOpacity = function(opacity) {
+        this.opacity = opacity;
     };
 
     module.exports = Element;
