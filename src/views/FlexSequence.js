@@ -52,7 +52,7 @@ define(function(require, exports, module) {
                 origin = item.origin || origin;
                 item = item.renderable;
             }
-            var offset = item.getSize()[this.options.direction] || context.size[this.options.direction];
+            var offset = (item.getSize() && item.getSize()[this.options.direction]) || context.size[this.options.direction];
             var spec = {
                 target: item.render(),
                 size: item.getSize(),
