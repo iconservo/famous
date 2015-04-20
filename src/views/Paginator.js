@@ -18,8 +18,8 @@ define(function(require, exports, module) {
     }
 
     function _createCachedMaps() {
-        this.leftMap = CachedMap.create(_transformMapLeft.bind(this, 0.0001));
-        this.rightMap = CachedMap.create(_transformMapRight.bind(this, -0.0001));
+        this.leftMap = CachedMap.create(_transformMapLeft.bind(this, 1));
+        this.rightMap = CachedMap.create(_transformMapRight.bind(this, -1));
     }
 
     function _transformMapRight(zMax, progress) {
