@@ -110,8 +110,8 @@ define(function(require, exports, module) {
     function _setStates(width) {
         this.translates = {
             current: [0, 0, 0],
-            previous: [-width/3, 0, -300],
-            next: [width, 0, 2]
+            previous: [-width/3, 0, -5],
+            next: [width, 0, 5]
         };
 
         _resetStates.call(this);
@@ -246,6 +246,12 @@ define(function(require, exports, module) {
         Engine.nextTick(function() {
             _transitionPrevious.call(this, cb);
         }.bind(this));
+    };
+
+    PageStack.prototype.reset = function() {
+        this.current.page = null;
+        this.next.page = null;
+        this.previous.page = null;
     };
 
     PageStack.prototype.getCurrentPage = function() {
