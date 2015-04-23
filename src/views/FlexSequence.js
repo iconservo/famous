@@ -17,6 +17,8 @@ define(function(require, exports, module) {
 
     FlexSequence.DEFAULT_OPTIONS = {
         direction: 1,
+        topMargin: 0,
+        bottomMargin: 0,
         itemSpacing: 0,
         childOrigin: [0, 0]
     };
@@ -42,7 +44,7 @@ define(function(require, exports, module) {
         if (!this.items) return context;
 
         var specs = [];
-        var position = 0;
+        var position = this.options.topMargin || 0;
         for (var i = 0; i < this.items.length; i++) {
             var item = this.items[i];
             var origin = this.options.childOrigin;
@@ -66,6 +68,7 @@ define(function(require, exports, module) {
         }
 
         this.length = position;
+        if (this.options.bottomMargin) this.length += this.options.bottomMargin;
         context.target = specs;
         return context;
     };
