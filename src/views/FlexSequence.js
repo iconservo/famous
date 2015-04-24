@@ -55,10 +55,14 @@ define(function(require, exports, module) {
                 item = item.renderable;
             }
             var offset = (item.getSize() && item.getSize()[this.options.direction]) || context.size[this.options.direction];
+
+            var translate = [0, 0, 0];
+            translate[this.options.direction] = position + spacing;
+
             var spec = {
                 target: item.render(),
                 size: item.getSize(),
-                transform: Transform.translate(0, position + spacing, 0),
+                transform: Transform.translate.apply(null, translate),
                 origin: origin,
                 align: origin
             }
