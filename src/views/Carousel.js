@@ -87,6 +87,7 @@ define(function(require, exports, module) {
         });
 
         this.sync.on('update', function(data) {
+            if (this.numItems < 2) return;
             var position = this.position.get() + data.delta;
             this.position.set(position);
         }.bind(this));
@@ -217,7 +218,7 @@ define(function(require, exports, module) {
                 align: [0.5, 0]
             },
             {
-                target: this.dotRow.render(),
+                target: ( this.numItems > 1 ) && this.dotRow.render(),
                 size: this.dotRow.getSize(),
                 transform: Transform.translate(0, -this.options.dotMargin/2 + this.options.dotSize/2, 2),
                 origin: [0.5, 1],
