@@ -63,6 +63,7 @@ define(function(require, exports, module) {
         loop: false,
         positionThreshold: 75,
         velocityThreshold: 0.2,
+        edgeLimit: 50,
         transition: {
             curve: 'easeOut',
             duration: 250
@@ -89,6 +90,9 @@ define(function(require, exports, module) {
         this.sync.on('update', function(data) {
             if (this.numItems < 2) return;
             var position = this.position.get() + data.delta;
+            var edgeLimit = this.options.edgeLimit;
+            if (this.index === 0 && position > edgeLimit) position = edgeLimit;
+            if (this.index === this.numItems - 1 && position < -edgeLimit) position = - edgeLimit;
             this.position.set(position);
         }.bind(this));
 
