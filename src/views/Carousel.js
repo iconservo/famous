@@ -170,6 +170,7 @@ define(function(require, exports, module) {
     }
 
     Carousel.prototype.sequenceFrom = function(items) {
+        if (!items) return;
         this.numItems = items.length;
         this.items = new ViewSequence({
             array: items,
