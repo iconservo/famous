@@ -175,7 +175,7 @@ define(function(require, exports, module) {
         Engine.nextTick(function() {
             this.state.set(0);
             this.current.page = this.previous.page;
-            this.previous.page = this.previous.page.prevPage;
+            this.previous.page = this.previous.page && this.previous.page.prevPage;
             this.next.page = null;
             _resetStates.call(this);
         }.bind(this));
